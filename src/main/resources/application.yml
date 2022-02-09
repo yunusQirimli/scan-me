@@ -1,13 +1,16 @@
 spring:
-    datasource:
-        url: jdbc:postgresql://localhost:5432/scanme
-        username: scanme_user
-        password: admin
-    jpa:
-        hibernate:
-            ddl-auto: create-drop
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQLDialect
-                format_sql: true
-        show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/scanme
+    username: scanme_user
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+  sql:
+    init:
+      mode: always
