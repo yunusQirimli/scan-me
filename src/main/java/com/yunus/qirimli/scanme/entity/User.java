@@ -1,5 +1,6 @@
 package com.yunus.qirimli.scanme.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -36,9 +37,10 @@ import lombok.ToString;
       "viewedProfiles",
       "bookmarkedProfiles",
       "phones",
-      "services",
+      "userServices",
       "contacts"
     })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
   @Id
@@ -60,6 +62,7 @@ public class User {
   private Set<Role> roles;
 
   @OneToMany(mappedBy = "profileOwner", fetch = FetchType.LAZY)
+  @JsonIgnoreProperties(value = "profileOwner")
   private List<Profile> ownedProfiles;
 
   @OneToMany(fetch = FetchType.LAZY)
@@ -67,6 +70,7 @@ public class User {
       name = "application_user_viewed_profile",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
       inverseJoinColumns = @JoinColumn(name = "profile_id", referencedColumnName = "profileId"))
+  @JsonIgnoreProperties(value = "profileOwner")
   private List<Profile> viewedProfiles;
 
   @OneToMany(fetch = FetchType.LAZY)
@@ -74,14 +78,18 @@ public class User {
       name = "application_user_bookmarked_profile",
       joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
       inverseJoinColumns = @JoinColumn(name = "profile_id", referencedColumnName = "profileId"))
+  @JsonIgnoreProperties(value = "profileOwner")
   private List<Profile> bookmarkedProfiles;
 
   @OneToMany(mappedBy = "phoneOwner", fetch = FetchType.LAZY)
+  @JsonIgnoreProperties(value = "phoneOwner")
   private List<Phone> phones;
 
   @OneToMany(mappedBy = "serviceOwner", fetch = FetchType.LAZY)
-  private List<Service> services;
+  @JsonIgnoreProperties(value = "serviceOwner")
+  private List<UserService> userServices;
 
   @OneToMany(mappedBy = "contactOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JsonIgnoreProperties(value = "contactOwner")
   private List<Contact> contacts;
 }

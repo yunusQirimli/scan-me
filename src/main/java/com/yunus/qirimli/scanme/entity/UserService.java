@@ -20,24 +20,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Contact {
+public class UserService {
 
   @Id
   @SequenceGenerator(
-      name = "contact_sequence",
-      sequenceName = "contact_sequence",
+      name = "user_service_sequence",
+      sequenceName = "user_service_sequence",
       allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_sequence")
-  private Long contactId;
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_service_sequence")
+  private Long userServiceId;
 
   private String title;
-  private String url;
+  private String description;
+  private Double price;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinTable(
-      name = "contact_application_user",
-      joinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "contactId"),
+      name = "user_service_application_user",
+      joinColumns = @JoinColumn(name = "user_sevice_id", referencedColumnName = "userServiceId"),
       inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"))
-  @JsonIgnoreProperties(value = "contacts")
-  private User contactOwner;
+  @JsonIgnoreProperties(value = "userServices")
+  private User serviceOwner;
 }

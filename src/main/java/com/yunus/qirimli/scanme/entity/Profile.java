@@ -1,5 +1,6 @@
 package com.yunus.qirimli.scanme.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"profileOwner", "phones", "contacts", "services"})
+@ToString(exclude = {"profileOwner", "phones", "contacts", "userServices"})
 public class Profile {
 
   @Id
@@ -43,6 +44,7 @@ public class Profile {
       name = "profile_application_user",
       joinColumns = @JoinColumn(name = "profile_id", referencedColumnName = "profileId"),
       inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"))
+  @JsonIgnoreProperties(value = {"ownedProfiles", "viewedProfiles", "bookmarkedProfiles"})
   private User profileOwner;
 
   @ManyToMany(fetch = FetchType.LAZY)
@@ -61,8 +63,8 @@ public class Profile {
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
-      name = "profile_service",
+      name = "profile_user_service",
       joinColumns = @JoinColumn(name = "profile_id", referencedColumnName = "profileId"),
-      inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "serviceId"))
-  private List<Service> services;
+      inverseJoinColumns = @JoinColumn(name = "user_service_id", referencedColumnName = "userServiceId"))
+  private List<UserService> userServices;
 }

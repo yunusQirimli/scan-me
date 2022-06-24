@@ -1,5 +1,6 @@
 package com.yunus.qirimli.scanme.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,5 +34,6 @@ public class Phone {
       name = "phone_application_user",
       joinColumns = @JoinColumn(name = "phone_id", referencedColumnName = "phoneId"),
       inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"))
+  @JsonIgnoreProperties(value = "phones")
   private User phoneOwner;
 }
